@@ -8,6 +8,6 @@ class Ladesk
      */
     public function __construct()
     {
-        //something
+        //something to do
     }
 }
