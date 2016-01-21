@@ -22,6 +22,12 @@ class Ladesk
         return $result['companies'];
     }
 
+    public function departments()
+    {
+        $result = $this->call('departments');
+        return $result['departments'];
+    }
+
     public function agent($id)
     {
         return $this->call('agents/' . $id);
