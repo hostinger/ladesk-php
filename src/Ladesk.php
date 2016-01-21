@@ -1,6 +1,7 @@
 <?php
 
-class Ladesk {
+class Ladesk
+{
 
     /**
      * Ladesk constructor.
