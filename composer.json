@@ -1,0 +1,14 @@
+{
+    "name": "hostinger/ladesk-php",
+    "description": "PHP Client for Ladesk REST API",
+    "license": "MIT",
+    "require": {},
+    "require-dev": {
+        "halleck45/phpmetrics": "*",
+        "sebastian/phpcpd": "*",
+        "phpmd/phpmd": "@stable",
+        "pdepend/pdepend": "2.2.2",
+        "phploc/phploc": "*",
+        "fabpot/php-cs-fixer": "1.11"
+    }
+}
