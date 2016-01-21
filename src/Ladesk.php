@@ -1,3 +1,11 @@
 <?php
 
-//@todo
+class Ladesk {
+
+    /**
+     * Ladesk constructor.
+     */
+    public function __construct()
+    {
+    }
+}
