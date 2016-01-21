@@ -11,43 +11,157 @@ class Ladesk
     {
         $this->api_key = $key;
         $this->client = new Client(array(
-            'base_uri' => $url.'/api/index.php',
+            'base_uri' => $url . '/api/index.php',
             'timeout' => 5,
         ));
     }
 
-    public function companies()
+    public function getApplicationStatus()
     {
-        $result = $this->call('companies');
+        return $this->call('GET', 'application/status');
+    }
+
+    public function getChatsOverview()
+    {
+        $result = $this->call('GET', 'chats/overview');
+        return $result['chatsOverview'];
+    }
+
+    public function getCallsOverview()
+    {
+        $result = $this->call('GET', 'calls/overview');
+        return $result['callsOverview'];
+    }
+
+    public function getCompanies()
+    {
+        $result = $this->call('GET', 'companies');
         return $result['companies'];
     }
 
-    public function departments()
+    public function getTags()
     {
-        $result = $this->call('departments');
+        $result = $this->call('GET', 'tags');
+        return $result['tags'];
+    }
+
+    public function getConversations()
+    {
+        $result = $this->call('GET', 'conversations');
+        return $result['conversations'];
+    }
+
+    public function getConversation($id)
+    {
+        $result = $this->call('GET', 'conversations/' . $id);
+        return $result;
+    }
+
+    public function getConversationMessages($id)
+    {
+        $result = $this->call('GET', 'conversations/' . $id . '/messages');
+        return $result;
+    }
+
+    public function getDepartments()
+    {
+        $result = $this->call('GET', 'departments');
         return $result['departments'];
     }
 
-    public function agent($id)
+    public function getAgent($id)
     {
-        return $this->call('agents/' . $id);
+        return $this->call('GET', 'agents/' . $id);
     }
 
-    public function agentOnlineStatus()
+    public function getAgentOnlineStatus()
     {
-        $result = $this->call('onlinestatus/agents');
+        $result = $this->call('GET', 'onlinestatus/agents');
         return $result['agentsOnlineStates'];
     }
 
-    private function call($url)
+    public function createConversation($data = array())
     {
         $params = array(
-            'query' => array(
-                'handler' => $url,
-                'apikey' => $this->api_key,
-            )
+            'useridentifier' => 'andrius@hostinger.com',
+            'recipient' => 'andrius.putna@gmail.com',
+            'department' => '8c2ad2e8',
+            'subject' => 'Testing message via API',
+            'message' => 'This message was created via REST API',
         );
-        $response = $this->client->request('GET', '', $params);
+        $result = $this->call('POST', 'conversations', $params);
+        $id = $result['conversationid'];
+
+        if($data['tag']) {
+            $this->assignTagForConversation($id, $data['tag']);
+        }
+    }
+
+    public function setConversationResolved($conversationId)
+    {
+        $params = array(
+            'status' => 'R',
+        );
+        return $this->call('PUT', 'conversations/'.$conversationId.'/status', $params);
+    }
+
+    public function setConversationOpen($conversationId)
+    {
+        $params = array(
+            'status' => 'C',
+        );
+        return $this->call('PUT', 'conversations/'.$conversationId.'/status', $params);
+    }
+
+    public function setConversationAnswered($conversationId)
+    {
+        $params = array(
+            'status' => 'A',
+        );
+        return $this->call('PUT', 'conversations/'.$conversationId.'/status', $params);
+    }
+
+    public function addMessageToConversation($conversationId, $message, $user_identifier)
+    {
+        $params = array(
+            'useridentifier' => $user_identifier,
+            'message' => $message,
+            'type' => 'M',
+        );
+
+        return $this->call('POST', 'conversations/'.$conversationId.'/messages', $params);
+    }
+
+    public function addNoteToConversation($conversationId, $message)
+    {
+        $params = array(
+            'message' => $message,
+            'type' => 'N',
+        );
+        return $this->call('POST', 'conversations/'.$conversationId.'/messages', $params);
+    }
+
+    public function assignTagForConversation($conversationId, $tag)
+    {
+        $params = array(
+            'name' => $tag,
+        );
+        $result = $this->call('POST', 'conversations/'.$conversationId.'/tags', $params);
+        return $result;
+    }
+    
+    private function call($method, $url, array $params = array())
+    {
+        $query = array_merge(array(
+            'handler' => $url,
+            'apikey' => $this->api_key,
+        ), $params);
+
+        $options = array(
+            'query' => $query,
+        );
+
+        $response = $this->client->request($method, '', $options);
         $code = $response->getStatusCode();
         if ($code != 200) {
             throw new \ErrorException('status occurred: ' . $code);
