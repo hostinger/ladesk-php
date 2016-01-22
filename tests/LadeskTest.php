@@ -145,7 +145,7 @@ class CartTest extends PHPUnit_Framework_TestCase
         $result = $ladesk->getCustomers($param);
         $this->assertArrayHasKey('customers', $result);
 
-        $id = $result['customers'][0]['contactid'];
+        $id = $result[0]['contactid'];
 
         $result = $ladesk->getCustomer($id);
         $this->assertArrayHasKey('contactid', $result);
@@ -180,7 +180,8 @@ class CartTest extends PHPUnit_Framework_TestCase
     {
         $ladesk = $this->getApi();
         $result = $ladesk->getCustomersGroups();
-        $this->assertArrayHasKey('groups', $result);
+        $this->assertArrayHasKey('id', $result[0]);
+        $this->assertArrayHasKey('name', $result[0]);
 
         $params = array(
             'name' => 'non-VIP2',
@@ -188,7 +189,7 @@ class CartTest extends PHPUnit_Framework_TestCase
         );
 //        $result = $ladesk->addCustomersGroup($params);
 
-        $id = $result['groups'][0]['id'];
+        $id = $result[0]['id'];
 //        $result = $ladesk->deleteCustomersGroup($id);
         $result = $ladesk->getCustomersGroup($id);
         $this->assertArrayHasKey('id', $result);

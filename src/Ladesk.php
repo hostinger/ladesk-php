@@ -81,6 +81,12 @@ class Ladesk
         return $result['departments'];
     }
 
+    public function getDepartment($id)
+    {
+        $result = $this->call('GET', 'departments/' . $id);
+        return $result['departments'];
+    }
+
     public function getAgent($id)
     {
         return $this->call('GET', 'agents/' . $id);
@@ -100,7 +106,8 @@ class Ladesk
 
     public function getCustomers($param = array())
     {
-        return $this->call('GET', 'customers/', $param);
+        $result = $this->call('GET', 'customers/', $param);
+        return $result['customers'];
     }
 
     public function getCustomer($id)
@@ -110,7 +117,8 @@ class Ladesk
 
     public function getCustomersGroups()
     {
-        return $this->call('GET', 'customersgroups/');
+        $result = $this->call('GET', 'customersgroups/');
+        return $result['groups'];
     }
 
     public function getCustomersGroup($id)
