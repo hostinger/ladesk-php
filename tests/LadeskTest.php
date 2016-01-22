@@ -89,6 +89,15 @@ class CartTest extends PHPUnit_Framework_TestCase
         $ladesk = $this->getApi();
         $result = $ladesk->getDepartments();
         $this->assertArrayHasKey('departmentid', $result[0]);
+
+        $id = $result[0]['departmentid'];
+        $agents = $ladesk->getAgentsFromDepartment($id);
+        $this->assertArrayHasKey('userid', $agents['agents'][0]);
+        $this->assertArrayHasKey('firstname', $agents['agents'][0]);
+        $this->assertArrayHasKey('lastname', $agents['agents'][0]);
+        $this->assertArrayHasKey('email', $agents['agents'][0]);
+        $this->assertArrayHasKey('onlinestatus', $agents['agents'][0]);
+        $this->assertArrayHasKey('presetstatus', $agents['agents'][0]);
     }
 
     public function testConversations()
@@ -136,7 +145,7 @@ class CartTest extends PHPUnit_Framework_TestCase
         $result = $ladesk->getCustomers($param);
         $this->assertArrayHasKey('customers', $result);
 
-        $id = $result['customers'][0]['contactid'];
+        $id = $result[0]['contactid'];
 
         $result = $ladesk->getCustomer($id);
         $this->assertArrayHasKey('contactid', $result);
@@ -167,6 +176,28 @@ class CartTest extends PHPUnit_Framework_TestCase
 
     }
 
+    public function testCustomersGroups()
+    {
+        $ladesk = $this->getApi();
+        $result = $ladesk->getCustomersGroups();
+        $this->assertArrayHasKey('id', $result[0]);
+        $this->assertArrayHasKey('name', $result[0]);
 
+        $params = array(
+            'name' => 'non-VIP2',
+            'color' => '000'
+        );
+//        $result = $ladesk->addCustomersGroup($params);
+
+        $id = $result[0]['id'];
+//        $result = $ladesk->deleteCustomersGroup($id);
+        $result = $ladesk->getCustomersGroup($id);
+        $this->assertArrayHasKey('id', $result);
+        $this->assertArrayHasKey('name', $result);
+        $this->assertArrayHasKey('color', $result);
+        $this->assertArrayHasKey('bg_color', $result);
+
+//        $result = $ladesk->changeCustomersGroup('503d', $params);
+    }
 
 }

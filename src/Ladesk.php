@@ -81,9 +81,21 @@ class Ladesk
         return $result['departments'];
     }
 
+    public function getDepartment($id)
+    {
+        $result = $this->call('GET', 'departments/' . $id);
+        return $result['departments'];
+    }
+
     public function getAgent($id)
     {
         return $this->call('GET', 'agents/' . $id);
+    }
+
+    public function getAgentsFromDepartment($id)
+    {
+        $result = $this->call('GET', 'departments/' . $id . '/agents');
+        return $result;
     }
 
     public function getAgentOnlineStatus()
@@ -94,12 +106,24 @@ class Ladesk
 
     public function getCustomers($param = array())
     {
-        return $this->call('GET', 'customers/', $param);
+        $result = $this->call('GET', 'customers/', $param);
+        return $result['customers'];
     }
 
     public function getCustomer($id)
     {
         return $this->call('GET', 'customers/' . $id);
+    }
+
+    public function getCustomersGroups()
+    {
+        $result = $this->call('GET', 'customersgroups/');
+        return $result['groups'];
+    }
+
+    public function getCustomersGroup($id)
+    {
+        return $this->call('GET', 'customersgroups/' . $id);
     }
 
     public function createConversation($data = array())
@@ -163,6 +187,11 @@ class Ladesk
         return $this->call('POST', 'conversations/'.$conversationId.'/messages', $params);
     }
 
+    public function addCustomersGroup($params)
+    {
+        return $this->call('POST', 'customersgroups/', $params);
+    }
+
     public function assignTagForConversation($conversationId, $tag)
     {
         $params = array(
@@ -184,6 +213,17 @@ class Ladesk
     public function registerCustomer($data)
     {
         return $this->call('POST', 'customers/', $data);
+    }
+
+    public function deleteCustomersGroup($id)
+    {
+        return $this->call('DELETE', 'customersgroups/' . $id);
+    }
+
+    public function changeCustomersGroup($id, $params)
+    {
+        $result = $this->call('PUT', 'customersgroups/' . $id, $params);
+        return $result;
     }
     
     private function call($method, $url, array $params = array())
