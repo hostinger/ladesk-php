@@ -135,6 +135,23 @@ class CartTest extends PHPUnit_Framework_TestCase
         );
         $result = $ladesk->getCustomers($param);
         $this->assertArrayHasKey('customers', $result);
+
+        $id = $result['customers'][0]['contactid'];
+
+        $result = $ladesk->getCustomer($id);
+        $this->assertArrayHasKey('contactid', $result);
+        $this->assertArrayHasKey('email', $result);
+        $this->assertArrayHasKey('firstname', $result);
+        $this->assertArrayHasKey('lastname', $result);
+        $this->assertArrayHasKey('authtoken', $result);
+        $this->assertArrayHasKey('role', $result);
+        $this->assertArrayHasKey('gender', $result);
+        $this->assertArrayHasKey('userid', $result);
+        $this->assertArrayHasKey('datecreated', $result);
+        $this->assertArrayHasKey('note', $result);
+        $this->assertArrayHasKey('customfields', $result);
+        $this->assertArrayHasKey('uniquefields', $result);
+
     }
 
 }

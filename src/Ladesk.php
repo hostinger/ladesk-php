@@ -97,6 +97,11 @@ class Ladesk
         return $this->call('GET', 'customers/', $param);
     }
 
+    public function getCustomer($id)
+    {
+        return $this->call('GET', 'customers/' . $id);
+    }
+
     public function createConversation($data = array())
     {
         $params = array(
