@@ -31,6 +31,7 @@ class CartTest extends PHPUnit_Framework_TestCase
         $ladesk = $this->getApi();
         $result = $ladesk->getApplicationStatus();
         $this->assertArrayHasKey('liveagentversion', $result);
+        $this->assertArrayHasKey('current_server_time', $result);
     }
 
     public function testTags()
@@ -51,7 +52,6 @@ class CartTest extends PHPUnit_Framework_TestCase
 
         $id = $companies[0]['id'];
         $company = $ladesk->getCompany($id);
-        $this->assertInternalType('array', $company);
         $this->assertArrayHasKey('id', $company);
         $this->assertArrayHasKey('name', $company);
         $this->assertArrayHasKey('datecreated', $company);
@@ -60,11 +60,28 @@ class CartTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('phones', $company);
     }
 
-    public function testAgent()
+    public function testAgentOnlineStatus()
     {
         $ladesk = $this->getApi();
-        $result = $ladesk->getAgentOnlineStatus();
-        $this->assertArrayHasKey('username', $result[0]);
+        $onlineAgents = $ladesk->getAgentOnlineStatus();
+        $this->assertArrayHasKey('id', $onlineAgents[0]);
+        $this->assertArrayHasKey('contactid', $onlineAgents[0]);
+        $this->assertArrayHasKey('username', $onlineAgents[0]);
+        $this->assertArrayHasKey('firstname', $onlineAgents[0]);
+        $this->assertArrayHasKey('lastname', $onlineAgents[0]);
+        $this->assertArrayHasKey('avatar_url', $onlineAgents[0]);
+        $this->assertArrayHasKey('onlineStatus', $onlineAgents[0]);
+
+        $id = $onlineAgents[0]['id'];
+        $agent = $ladesk->getAgent($id);
+        $this->assertArrayHasKey('contactid', $agent);
+        $this->assertArrayHasKey('userid', $agent);
+        $this->assertArrayHasKey('email', $agent);
+        $this->assertArrayHasKey('firstname', $agent);
+        $this->assertArrayHasKey('lastname', $agent);
+        $this->assertArrayHasKey('gender', $agent);
+        $this->assertArrayHasKey('role', $agent);
+        $this->assertArrayHasKey('authtoken', $agent);
     }
 
     public function testDepartments()
