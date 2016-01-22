@@ -127,6 +127,14 @@ class CartTest extends PHPUnit_Framework_TestCase
 
     }
 
-
+    public function testCustomers()
+    {
+        $ladesk = $this->getApi();
+        $param = array(
+            'email' => 'z.gurtskaia@mail.ru'
+        );
+        $result = $ladesk->getCustomers($param);
+        $this->assertArrayHasKey('customers', $result);
+    }
 
 }

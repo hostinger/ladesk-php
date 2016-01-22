@@ -92,6 +92,11 @@ class Ladesk
         return $result['agentsOnlineStates'];
     }
 
+    public function getCustomers($param = array())
+    {
+        return $this->call('GET', 'customers/', $param);
+    }
+
     public function createConversation($data = array())
     {
         $params = array(
