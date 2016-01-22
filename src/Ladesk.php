@@ -39,6 +39,12 @@ class Ladesk
         return $result['companies'];
     }
 
+    public function getCompany($id)
+    {
+        $result = $this->call('GET', 'companies/'.$id);
+        return $result;
+    }
+
     public function getTags()
     {
         $result = $this->call('GET', 'tags');
