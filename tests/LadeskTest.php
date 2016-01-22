@@ -167,6 +167,27 @@ class CartTest extends PHPUnit_Framework_TestCase
 
     }
 
+    public function testCustomersGroups()
+    {
+        $ladesk = $this->getApi();
+        $result = $ladesk->getCustomersGroups();
+        $this->assertArrayHasKey('groups', $result);
 
+        $params = array(
+            'name' => 'non-VIP2',
+            'color' => '000'
+        );
+//        $result = $ladesk->addCustomersGroup($params);
+
+        $id = $result['groups'][0]['id'];
+//        $result = $ladesk->deleteCustomersGroup($id);
+        $result = $ladesk->getCustomersGroup($id);
+        $this->assertArrayHasKey('id', $result);
+        $this->assertArrayHasKey('name', $result);
+        $this->assertArrayHasKey('color', $result);
+        $this->assertArrayHasKey('bg_color', $result);
+
+//        $result = $ladesk->changeCustomersGroup('503d', $params);
+    }
 
 }

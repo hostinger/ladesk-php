@@ -102,6 +102,16 @@ class Ladesk
         return $this->call('GET', 'customers/' . $id);
     }
 
+    public function getCustomersGroups()
+    {
+        return $this->call('GET', 'customersgroups/');
+    }
+
+    public function getCustomersGroup($id)
+    {
+        return $this->call('GET', 'customersgroups/' . $id);
+    }
+
     public function createConversation($data = array())
     {
         $params = array(
@@ -163,6 +173,11 @@ class Ladesk
         return $this->call('POST', 'conversations/'.$conversationId.'/messages', $params);
     }
 
+    public function addCustomersGroup($params)
+    {
+        return $this->call('POST', 'customersgroups/', $params);
+    }
+
     public function assignTagForConversation($conversationId, $tag)
     {
         $params = array(
@@ -184,6 +199,17 @@ class Ladesk
     public function registerCustomer($data)
     {
         return $this->call('POST', 'customers/', $data);
+    }
+
+    public function deleteCustomersGroup($id)
+    {
+        return $this->call('DELETE', 'customersgroups/' . $id);
+    }
+
+    public function changeCustomersGroup($id, $params)
+    {
+        $result = $this->call('PUT', 'customersgroups/' . $id, $params);
+        return $result;
     }
     
     private function call($method, $url, array $params = array())
