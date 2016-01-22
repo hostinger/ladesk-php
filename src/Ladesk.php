@@ -69,6 +69,12 @@ class Ladesk
         return $result;
     }
 
+    public function getConversationTags($id)
+    {
+        $result = $this->call('GET', 'conversations/' . $id . '/tags');
+        return $result;
+    }
+
     public function getDepartments()
     {
         $result = $this->call('GET', 'departments');
@@ -153,6 +159,15 @@ class Ladesk
             'name' => $tag,
         );
         $result = $this->call('POST', 'conversations/'.$conversationId.'/tags', $params);
+        return $result;
+    }
+
+    public function unassignTagForConversation($conversationId, $name)
+    {
+        $params = array(
+            'name' => $name,
+        );
+        $result = $this->call('DELETE', 'conversations/'.$conversationId.'/tags', $params);
         return $result;
     }
     

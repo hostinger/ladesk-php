@@ -105,6 +105,13 @@ class CartTest extends PHPUnit_Framework_TestCase
         $result = $ladesk->getConversationMessages($id);
         $this->assertArrayHasKey('groups', $result);
 
+//        $result = $ladesk->assignTagForConversation($id, 'test');
+
+        $result = $ladesk->getConversationTags($id);
+        $this->assertArrayHasKey('tags', $result);
+
+//        $result = $ladesk->unassignTagForConversation($id, 'paid');
+
         $data = array(
             'useridentifier' => '',
             'recipient' => '',
@@ -119,5 +126,7 @@ class CartTest extends PHPUnit_Framework_TestCase
 //        $ladesk->assignTagForConversation($id, 'test');
 
     }
+
+
 
 }
