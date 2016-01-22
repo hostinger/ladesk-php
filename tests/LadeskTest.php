@@ -131,7 +131,7 @@ class CartTest extends PHPUnit_Framework_TestCase
     {
         $ladesk = $this->getApi();
         $param = array(
-            'email' => 'z.gurtskaia@mail.ru'
+            'email' => 'hisemail@mail.domain'
         );
         $result = $ladesk->getCustomers($param);
         $this->assertArrayHasKey('customers', $result);
@@ -152,6 +152,21 @@ class CartTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('customfields', $result);
         $this->assertArrayHasKey('uniquefields', $result);
 
+        $data = array(
+            'email' => 'hisemail@mail.domain',
+            'phone' => '',
+            'name' => 'Fname Lname',
+            'role' => 'R',
+            'password' => 'hispassword',
+            'note'   =>  'lovely customer',
+            'send_registration_mail' => 'N'
+        );
+
+//        $result = $ladesk->registerCustomer($data);
+
+
     }
+
+
 
 }

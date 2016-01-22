@@ -180,6 +180,11 @@ class Ladesk
         $result = $this->call('DELETE', 'conversations/'.$conversationId.'/tags', $params);
         return $result;
     }
+
+    public function registerCustomer($data)
+    {
+        return $this->call('POST', 'customers/', $data);
+    }
     
     private function call($method, $url, array $params = array())
     {
