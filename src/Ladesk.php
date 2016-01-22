@@ -86,6 +86,12 @@ class Ladesk
         return $this->call('GET', 'agents/' . $id);
     }
 
+    public function getAgentsFromDepartment($id)
+    {
+        $result = $this->call('GET', 'departments/' . $id . '/agents');
+        return $result;
+    }
+
     public function getAgentOnlineStatus()
     {
         $result = $this->call('GET', 'onlinestatus/agents');

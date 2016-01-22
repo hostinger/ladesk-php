@@ -89,6 +89,15 @@ class CartTest extends PHPUnit_Framework_TestCase
         $ladesk = $this->getApi();
         $result = $ladesk->getDepartments();
         $this->assertArrayHasKey('departmentid', $result[0]);
+
+        $id = $result[0]['departmentid'];
+        $agents = $ladesk->getAgentsFromDepartment($id);
+        $this->assertArrayHasKey('userid', $agents['agents'][0]);
+        $this->assertArrayHasKey('firstname', $agents['agents'][0]);
+        $this->assertArrayHasKey('lastname', $agents['agents'][0]);
+        $this->assertArrayHasKey('email', $agents['agents'][0]);
+        $this->assertArrayHasKey('onlinestatus', $agents['agents'][0]);
+        $this->assertArrayHasKey('presetstatus', $agents['agents'][0]);
     }
 
     public function testConversations()
