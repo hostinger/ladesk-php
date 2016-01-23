@@ -128,19 +128,12 @@ class Ladesk
 
     public function createConversation($data = array())
     {
-        $params = array(
-            'useridentifier' => 'andrius@hostinger.com',
-            'recipient' => 'andrius.putna@gmail.com',
-            'department' => '8c2ad2e8',
-            'subject' => 'Testing message via API',
-            'message' => 'This message was created via REST API',
-        );
-        $result = $this->call('POST', 'conversations', $params);
+        $result = $this->call('POST', 'conversations', $data);
         $id = $result['conversationid'];
-
         if($data['tag']) {
             $this->assignTagForConversation($id, $data['tag']);
         }
+        return $result;
     }
 
     public function setConversationResolved($conversationId)
