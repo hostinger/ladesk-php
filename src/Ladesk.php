@@ -197,6 +197,11 @@ class Ladesk
         return $this->call('POST', 'customersgroups/', $params);
     }
 
+    public function addTag($params)
+    {
+        return $this->call('POST', 'tags/', $params);
+    }
+
     public function assignTagForConversation($conversationId, $tag)
     {
         $params = array(
