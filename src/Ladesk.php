@@ -315,6 +315,24 @@ class Ladesk
         return $result['entries'];
     }
 
+    public function getWidgets()
+    {
+        $result = $this->call('GET', 'widgets');
+        return $result['widgets'];
+    }
+
+    public function getWidget($id)
+    {
+        $result = $this->call('GET', 'widgets/' . $id);
+        return $result;
+    }
+
+    public function getFile($id)
+    {
+        $result = $this->call('GET', 'files/' . $id);
+        return $result;
+    }
+
     public function createConversation($data = array())
     {
         $result = $this->call('POST', 'conversations', $data);
@@ -361,6 +379,12 @@ class Ladesk
         return $result;
     }
 
+    public function deleteFile($id)
+    {
+        $result = $this->call('DELETE', 'files/' . $id);
+        return $result;
+    }
+
     public function deleteCustomerFromGroup($id, $name)
     {
         $param = array(
@@ -390,6 +414,16 @@ class Ladesk
         return $this->call('POST', 'conversations/'.$conversationId.'/messages', $params);
     }
 
+    public function addCustomFieldToConversation($conversationId, $params)
+    {
+        return $this->call('POST', 'conversations/'.$conversationId.'/fields', $params);
+    }
+
+    public function addCustomFieldToCustomer($conversationId, $params)
+    {
+        return $this->call('POST', 'customers/'.$conversationId.'/fields', $params);
+    }
+
     public function addCustomerToGroup($id, $groupName)
     {
         $params = array(
@@ -406,6 +440,11 @@ class Ladesk
     public function addTag($params)
     {
         return $this->call('POST', 'tags/', $params);
+    }
+
+    public function addWidget($params)
+    {
+        return $this->call('POST', 'widgets/', $params);
     }
 
     public function changeTag($id, $params)
@@ -441,6 +480,11 @@ class Ladesk
         return $this->call('POST', 'knowledgebase/categories', $params);
     }
 
+    public function addFile($params)
+    {
+        return $this->call('POST', 'files', $params);
+    }
+
     public function registerCustomer($data)
     {
         return $this->call('POST', 'customers/', $data);
@@ -456,9 +500,24 @@ class Ladesk
         return $this->call('DELETE', 'tags/' . $id);
     }
 
+    public function deleteWidget($id)
+    {
+        return $this->call('DELETE', 'widgets/' . $id);
+    }
+
     public function deleteKnowledgebaseArticle($id)
     {
         return $this->call('DELETE', 'knowledgebase/entries/' . $id);
+    }
+
+    public function deleteCustomFieldFromConversation($id, $param = array())
+    {
+        return $this->call('DELETE', 'conversations/' . $id . '/fields', $param);
+    }
+
+    public function deleteCustomFieldFromCustomer($id, $param = array())
+    {
+        return $this->call('DELETE', 'customers/' . $id . '/fields', $param);
     }
 
     public function changeCustomersGroup($id, $params)
@@ -476,6 +535,12 @@ class Ladesk
     public function changeKnowledgebaseCategory($id, $params)
     {
         $result = $this->call('PUT', 'knowledgebase/categories/' . $id, $params);
+        return $result;
+    }
+
+    public function changeWidget($id, $params)
+    {
+        $result = $this->call('PUT', 'widgets/' . $id, $params);
         return $result;
     }
 

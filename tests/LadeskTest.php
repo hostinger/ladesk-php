@@ -162,6 +162,13 @@ class CartTest extends PHPUnit_Framework_TestCase
         $result = $ladesk->getConversationTags($id);
         $this->assertArrayHasKey('tags', $result);
 
+        $data = array(
+            'customfields' => json_encode(array('a', 'b', 'c', 'd'))
+        );
+//        $result = $ladesk->addCustomFieldToConversation($id, $data);
+
+//        $result = $ladesk->deleteCustomFieldFromConversation($id);
+
 //        $result = $ladesk->unassignTagFromConversation($id, 'paid');
 
         $data = array(
@@ -202,6 +209,16 @@ class CartTest extends PHPUnit_Framework_TestCase
         $result = $ladesk->getCustomers(); //var_dump($result);
 
         $id = $result[14]['contactid'];
+
+        $data = array(
+            'customfields' => json_encode(array('a', 'b', 'c', 'd'))
+        );
+//        $result = $ladesk->addCustomFieldToCustomer($id, $data);
+
+        $data = array(
+            'code' => 'b'
+        );
+//        $result = $ladesk->deleteCustomFieldFromCustomer($id, $data);
 
         $result = $ladesk->getCustomer($id);
         $this->assertArrayHasKey('contactid', $result);
@@ -661,6 +678,74 @@ class CartTest extends PHPUnit_Framework_TestCase
 //        $result = $ladesk->deleteKnowledgebaseArticle($id);
         var_dump($result);
 
+    }
+
+    public function testWidgets()
+    {
+        $ladesk = $this->getApi();
+        $result = $ladesk->getWidgets();
+
+        $id = $result[0]['contactwidgetid'];
+        $result = $ladesk->getWidget($id);
+
+        $onlineDepartmens = $ladesk->getDepartmentOnlineStatus();
+        $departmentId = $onlineDepartmens[0]['id'];
+        $data = array(
+            'name' => 'widget name',
+            'provide' => 't',
+            'departmentid' => $departmentId,
+            'rtype' => 'C',
+            'usecode' => 'F',
+            'status' => 'F',
+            'attributes' => ''/* ATTRIBUTES */,
+            'language' => 'en'
+        );
+        $result = $ladesk->addWidget($data);
+
+        $data = array(
+            'name' => 'Hosting24_Publicx',
+            'provide' => 'BFC',
+            'departmentid' => 'default',
+            'rtype' => 'C',
+            'usecode' => 'B',
+            'status' => 'N',
+            'attributes' => array(
+                // ATTRIBUTES HERE
+            )
+        );
+//        $result = $ladesk->changeWidget('0670d2b9', $data);
+
+//        $result = $ladesk->deleteWidget('0670d2b9xx');
+    }
+
+    public function testFiles()
+    {
+        $ladesk = $this->getApi();
+
+        $data = array(
+            'name' => 'myFileName',
+            'type' => 'image/png',
+            'downloadUrl' => 'http://a5.mzstatic.com/us/r30/Purple5/v4/5a/2e/e9/5a2ee9b3-8f0e-4f8b-4043-dd3e3ea29766/icon128-2x.png'
+        );
+//        $result = $ladesk->addFile($data);
+//        $this->assertArrayHasKey('fileid', $result);
+//        $this->assertArrayHasKey('created', $result);
+//        $this->assertArrayHasKey('filename', $result);
+//        $this->assertArrayHasKey('filesize', $result);
+//        $this->assertArrayHasKey('filetype', $result);
+//        $this->assertArrayHasKey('downloads', $result);
+//        $this->assertArrayHasKey('downloadUrl', $result);
+
+//        $result = $ladesk->getFile('616ef0d9458f52f5d617c38a7b200313');
+//        $this->assertArrayHasKey('fileid', $result);
+//        $this->assertArrayHasKey('created', $result);
+//        $this->assertArrayHasKey('filename', $result);
+//        $this->assertArrayHasKey('filesize', $result);
+//        $this->assertArrayHasKey('filetype', $result);
+//        $this->assertArrayHasKey('downloads', $result);
+//        $this->assertArrayHasKey('downloadUrl', $result);
+
+//        $result = $ladesk->deleteFile('616ef0d9458f52f5d617c38a7b200313');
     }
 
 }
