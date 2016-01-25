@@ -161,6 +161,23 @@ class Ladesk
         return $result['loads'];
     }
 
+    public function getChatsSLAComplianceReport($params = array())
+    {
+        $result = $this->call('GET', 'reports/chats/slacompliance', $params);
+        return $result['slacompliances'];
+    }
+
+    public function getChatsSLALogReport($date_from, $date_to, $otherparams = array())
+    {
+        $params = array(
+            'date_from' => $date_from,
+            'date_to' => $date_to
+        );
+        $params = array_merge($params, $otherparams);
+        $result = $this->call('GET', 'reports/chats/slalog', $params);
+        return $result['slalogs'];
+    }
+
     public function createConversation($data = array())
     {
         $result = $this->call('POST', 'conversations', $data);

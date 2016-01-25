@@ -248,7 +248,7 @@ class CartTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('path', $result[0]);*/
     }
 
-    public function testChatAgentsAvailabilityReport()
+    public function testChatReports()
     {
         $ladesk = $this->getApi();
 
@@ -272,11 +272,6 @@ class CartTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('hours_online', $result[0]);
         $this->assertArrayHasKey('from_date', $result[0]);
         $this->assertArrayHasKey('to_date', $result[0]);
-    }
-
-    public function testChatsAvailabilityAndLoadReport()
-    {
-        $ladesk = $this->getApi();
 
         $params = array(
             'date_from' => '',
@@ -302,6 +297,41 @@ class CartTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('avgService', $result[0]);
         $this->assertArrayHasKey('maxService', $result[0]);
         $this->assertArrayHasKey('minService', $result[0]);
+
+        $result = $ladesk->getChatsSLAComplianceReport();
+        $this->assertArrayHasKey('date', $result[0]);
+        $this->assertArrayHasKey('fulfilled', $result[0]);
+        $this->assertArrayHasKey('avgFulfilledTime', $result[0]);
+        $this->assertArrayHasKey('maxFulfilledTime', $result[0]);
+        $this->assertArrayHasKey('minFulfilledTime', $result[0]);
+        $this->assertArrayHasKey('unfulfilled', $result[0]);
+        $this->assertArrayHasKey('avgUnfulfilledTime', $result[0]);
+        $this->assertArrayHasKey('maxUnfulfilledTime', $result[0]);
+        $this->assertArrayHasKey('minUnfulfilledTime', $result[0]);
+
+        $result = $ladesk->getChatsSLALogReport('2016-01-01', '2015-01-15');
+        /* empty for now
+        $this->assertArrayHasKey('id', $result);
+        $this->assertArrayHasKey('conversationid', $result);
+        $this->assertArrayHasKey('code', $result);
+        $this->assertArrayHasKey('departmentid', $result);
+        $this->assertArrayHasKey('department_name', $result);
+        $this->assertArrayHasKey('levelid', $result);
+        $this->assertArrayHasKey('sla_level_name', $result);
+        $this->assertArrayHasKey('sla', $result);
+        $this->assertArrayHasKey('date_created', $result);
+        $this->assertArrayHasKey('date_closed', $result);
+        $this->assertArrayHasKey('server_date_closed', $result);
+        $this->assertArrayHasKey('date_due', $result);
+        $this->assertArrayHasKey('server_date_due', $result);
+        $this->assertArrayHasKey('sla_level_id', $result);
+        $this->assertArrayHasKey('agentid', $result);
+        $this->assertArrayHasKey('agent_firstname', $result);
+        $this->assertArrayHasKey('agent_lastname', $result);
+        $this->assertArrayHasKey('req_contactid', $result);
+        $this->assertArrayHasKey('req_firstname', $result);
+        $this->assertArrayHasKey('req_lastname', $result);
+         */
     }
 
 }
