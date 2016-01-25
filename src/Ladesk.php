@@ -303,6 +303,18 @@ class Ladesk
         return $result['agents'];
     }
 
+    public function getKnowledgebases()
+    {
+        $result = $this->call('GET', 'knowledgebase/knowledgebases');
+        return $result['knowledgebases'];
+    }
+
+    public function getKnowledgebaseArticles()
+    {
+        $result = $this->call('GET', 'knowledgebase/entries');
+        return $result['entries'];
+    }
+
     public function createConversation($data = array())
     {
         $result = $this->call('POST', 'conversations', $data);
@@ -346,6 +358,15 @@ class Ladesk
     public function deleteConversation($id, $data = array())
     {
         $result = $this->call('DELETE', 'conversations/' . $id, $data);
+        return $result;
+    }
+
+    public function deleteCustomerFromGroup($id, $name)
+    {
+        $param = array(
+            'name' => $name
+        );
+        $result = $this->call('DELETE', 'customers/' . $id . '/groups', $param);
         return $result;
     }
 
@@ -410,6 +431,16 @@ class Ladesk
         return $result;
     }
 
+    public function addArticleToKnowledgebase($params)
+    {
+        return $this->call('POST', 'knowledgebase/articles', $params);
+    }
+
+    public function addKnowledgebaseCategory($params)
+    {
+        return $this->call('POST', 'knowledgebase/categories', $params);
+    }
+
     public function registerCustomer($data)
     {
         return $this->call('POST', 'customers/', $data);
@@ -425,10 +456,36 @@ class Ladesk
         return $this->call('DELETE', 'tags/' . $id);
     }
 
+    public function deleteKnowledgebaseArticle($id)
+    {
+        return $this->call('DELETE', 'knowledgebase/entries/' . $id);
+    }
+
     public function changeCustomersGroup($id, $params)
     {
         $result = $this->call('PUT', 'customersgroups/' . $id, $params);
         return $result;
+    }
+
+    public function changeKnowledgebaseArticle($id, $params)
+    {
+        $result = $this->call('PUT', 'knowledgebase/articles/' . $id, $params);
+        return $result;
+    }
+
+    public function changeKnowledgebaseCategory($id, $params)
+    {
+        $result = $this->call('PUT', 'knowledgebase/categories/' . $id, $params);
+        return $result;
+    }
+
+    public function searchKnowledgebase($term)
+    {
+        $param = array(
+            'query' => $term
+        );
+        $result = $this->call('GET', 'knowledgebase/search', $param);
+        return $result['entries'];
     }
     
     private function call($method, $url, array $params = array())

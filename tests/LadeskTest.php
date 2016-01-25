@@ -259,6 +259,8 @@ class CartTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('color', $result);
         $this->assertArrayHasKey('bg_color', $result);
 
+//        $result = $ladesk->deleteCustomerFromGroup('hisemail2@mail.domain', 'non-VIP2');
+
 //        $result = $ladesk->changeCustomersGroup('503d', $params);
     }
 
@@ -541,6 +543,124 @@ class CartTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('server_date_due', $result[0]);
         $this->assertArrayHasKey('requester', $result[0]);
         $this->assertArrayHasKey('comment', $result[0]);*/
+    }
+
+    public function testKnowledgebase()
+    {
+        $ladesk = $this->getApi();
+
+        $params = array(
+            'content' => 'Article content',
+            'title' => 'Article title',
+            //'kb_id' => '',
+            //'parent_entry_id' => '',
+            //'rstatus' => '',
+            //'access' => '',
+            //'rorder' => '',
+            //'keywords' => '',
+            //'full_preview' => ''
+        );
+//        $result = $ladesk->addArticleToKnowledgebase($params);
+//        $this->assertArrayHasKey('kb_id', $result);
+//        $this->assertArrayHasKey('kb_entry_id', $result);
+//        $this->assertArrayHasKey('parent_entry_id', $result);
+//        $this->assertArrayHasKey('urlcode', $result);
+//        $this->assertArrayHasKey('title', $result);
+//        $this->assertArrayHasKey('content', $result);
+//        $this->assertArrayHasKey('content_text', $result);
+//        $this->assertArrayHasKey('content_simple_html', $result);
+//        $this->assertArrayHasKey('treepath', $result);
+//        $this->assertArrayHasKey('rstatus', $result);
+//        $this->assertArrayHasKey('access', $result);
+//        $this->assertArrayHasKey('access_inherited', $result);
+//        $this->assertArrayHasKey('rorder', $result);
+//        $this->assertArrayHasKey('keywords', $result);
+//        $this->assertArrayHasKey('datecreated', $result);
+//        $this->assertArrayHasKey('datechanged', $result);
+//        $this->assertArrayHasKey('views', $result);
+
+        $result = $ladesk->getKnowledgebaseArticles();
+        $this->assertArrayHasKey('kb_id', $result[0]);
+        $this->assertArrayHasKey('kb_entry_id', $result[0]);
+        $this->assertArrayHasKey('parent_entry_id', $result[0]);
+        $this->assertArrayHasKey('rtype', $result[0]);
+        $this->assertArrayHasKey('rstatus', $result[0]);
+        $this->assertArrayHasKey('access', $result[0]);
+        $this->assertArrayHasKey('access_inherited', $result[0]);
+        $this->assertArrayHasKey('urlcode', $result[0]);
+        $this->assertArrayHasKey('treepath', $result[0]);
+        $this->assertArrayHasKey('rorder', $result[0]);
+        $this->assertArrayHasKey('title', $result[0]);
+        $this->assertArrayHasKey('metadescription', $result[0]);
+        $this->assertArrayHasKey('keywords', $result[0]);
+        $this->assertArrayHasKey('content', $result[0]);
+        $this->assertArrayHasKey('conversationid', $result[0]);
+        $this->assertArrayHasKey('departmentid', $result[0]);
+        $this->assertArrayHasKey('views', $result[0]);
+        $this->assertArrayHasKey('votes', $result[0]);
+        $this->assertArrayHasKey('datecreated', $result[0]);
+        $this->assertArrayHasKey('datechanged', $result[0]);
+        $this->assertArrayHasKey('deleted', $result[0]);
+        $this->assertArrayHasKey('description', $result[0]);
+
+        $result = $ladesk->getKnowledgebases();
+        $this->assertArrayHasKey('kb_id', $result[0]);
+        $this->assertArrayHasKey('name', $result[0]);
+
+        $result = $ladesk->searchKnowledgebase('title');
+        $this->assertArrayHasKey('kb_id', $result[0]);
+        $this->assertArrayHasKey('kb_entry_id', $result[0]);
+        $this->assertArrayHasKey('rtype', $result[0]);
+        $this->assertArrayHasKey('rstatus', $result[0]);
+        $this->assertArrayHasKey('access', $result[0]);
+        $this->assertArrayHasKey('access_inherited', $result[0]);
+        $this->assertArrayHasKey('urlcode', $result[0]);
+        $this->assertArrayHasKey('treepath', $result[0]);
+        $this->assertArrayHasKey('title', $result[0]);
+        $this->assertArrayHasKey('title_clear', $result[0]);
+        $this->assertArrayHasKey('content_text', $result[0]);
+        $this->assertArrayHasKey('content_simple_html', $result[0]);
+        $this->assertArrayHasKey('conversationid', $result[0]);
+        $this->assertArrayHasKey('votesCount', $result[0]);
+        $this->assertArrayHasKey('datechanged', $result[0]);
+        $this->assertArrayHasKey('url', $result[0]);
+
+        $id = $result[0]['kb_entry_id'];
+        $data = array(
+            'keywords' => 'keyword'
+        );
+//        $result = $ladesk->changeKnowledgebaseArticle($id, $data);
+
+        $data = array(
+            'title' => 'Category title'
+        );
+//        $result = $ladesk->addKnowledgebaseCategory($data);
+//        $this->assertArrayHasKey('kb_id', $result);
+//        $this->assertArrayHasKey('kb_entry_id', $result);
+//        $this->assertArrayHasKey('parent_entry_id', $result);
+//        $this->assertArrayHasKey('urlcode', $result);
+//        $this->assertArrayHasKey('title', $result);
+//        $this->assertArrayHasKey('treepath', $result);
+//        $this->assertArrayHasKey('rtype', $result);
+//        $this->assertArrayHasKey('rstatus', $result);
+//        $this->assertArrayHasKey('access', $result);
+//        $this->assertArrayHasKey('access_inherited', $result);
+//        $this->assertArrayHasKey('rorder', $result);
+//        $this->assertArrayHasKey('keywords', $result);
+//        $this->assertArrayHasKey('datecreated', $result);
+//        $this->assertArrayHasKey('datechanged', $result);
+//        $this->assertArrayHasKey('departmentid', $result);
+//        $this->assertArrayHasKey('views', $result);
+//        $this->assertArrayHasKey('description', $result);
+
+        $data = array(
+            'title' => 'new title'
+        );
+//        $result = $ladesk->changeKnowledgebaseCategory($id, $data);
+
+//        $result = $ladesk->deleteKnowledgebaseArticle($id);
+        var_dump($result);
+
     }
 
 }
