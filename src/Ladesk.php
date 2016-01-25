@@ -115,6 +115,11 @@ class Ladesk
         return $this->call('GET', 'customers/' . $id);
     }
 
+    public function getTag($id)
+    {
+        return $this->call('GET', 'tags/' . $id);
+    }
+
     public function getCustomersGroups()
     {
         $result = $this->call('GET', 'customersgroups/');
@@ -202,6 +207,11 @@ class Ladesk
         return $this->call('POST', 'tags/', $params);
     }
 
+    public function changeTag($id, $params)
+    {
+        return $this->call('PUT', 'tags/' . $id, $params);
+    }
+
     public function assignTagForConversation($conversationId, $tag)
     {
         $params = array(
@@ -228,6 +238,11 @@ class Ladesk
     public function deleteCustomersGroup($id)
     {
         return $this->call('DELETE', 'customersgroups/' . $id);
+    }
+
+    public function deleteTag($id)
+    {
+        return $this->call('DELETE', 'tags/' . $id);
     }
 
     public function changeCustomersGroup($id, $params)

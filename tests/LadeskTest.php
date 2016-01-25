@@ -39,14 +39,25 @@ class CartTest extends PHPUnit_Framework_TestCase
         $ladesk = $this->getApi();
 
         $data = array(
-            'name' => 'new tag name',
+            'name' => 'brand new tag name',
             'color' => '',
             'bg_color' => ''
         );
-        $result = $ladesk->addTag($data);
+//        $result = $ladesk->addTag($data);
 
         $result = $ladesk->getTags();
         $this->assertArrayHasKey('name', $result[0]);
+
+//        $result = $ladesk->changeTag('4247', $data);
+
+        $id = $result[0]['id'];
+        $result = $ladesk->getTag($id);
+        $this->assertArrayHasKey('name', $result);
+        $this->assertArrayHasKey('color', $result);
+        $this->assertArrayHasKey('bg_color', $result);
+
+        $result = $ladesk->deleteTag($id);
+
     }
 
     public function testCompanies()
