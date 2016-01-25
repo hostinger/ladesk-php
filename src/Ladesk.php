@@ -160,6 +160,18 @@ class Ladesk
         return $this->call('PUT', 'conversations/'.$conversationId.'/status', $params);
     }
 
+    public function transferConversation($id, $data = array())
+    {
+        $result = $this->call('PUT', 'conversations/' . $id . '/attendants', $data);
+        return $result;
+    }
+
+    public function deleteConversation($id, $data = array())
+    {
+        $result = $this->call('DELETE', 'conversations/' . $id, $data);
+        return $result;
+    }
+
     public function addMessageToConversation($conversationId, $message, $user_identifier)
     {
         $params = array(

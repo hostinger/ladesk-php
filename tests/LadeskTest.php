@@ -134,6 +134,20 @@ class CartTest extends PHPUnit_Framework_TestCase
 //        $ladesk->addNoteToConversation($id, 'This is auto note');
 //        $ladesk->assignTagForConversation($id, 'test');
 
+        $data = array(
+            'agentidentifier' => '',
+            'useridentifier' => '',
+            'department' => 'f16239ed',
+            'note' => 'this is a note'
+        );
+//        $result = $ladesk->transferConversation($id, $data);
+
+        $data = array(
+            'useridentifier' => '',
+            'note' => 'this is a deletion note'
+        );
+//        $result = $ladesk->deleteConversation($id, $data);
+
     }
 
     public function testCustomers()
