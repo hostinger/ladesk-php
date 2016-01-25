@@ -84,7 +84,7 @@ class Ladesk
     public function getDepartment($id)
     {
         $result = $this->call('GET', 'departments/' . $id);
-        return $result['departments'];
+        return $result;
     }
 
     public function getAgent($id)
@@ -102,6 +102,12 @@ class Ladesk
     {
         $result = $this->call('GET', 'onlinestatus/agents');
         return $result['agentsOnlineStates'];
+    }
+
+    public function getDepartmentOnlineStatus()
+    {
+        $result = $this->call('GET', 'onlinestatus/departments');
+        return $result['departmentsOnlineStates'];
     }
 
     public function getCustomers($param = array())
@@ -143,10 +149,28 @@ class Ladesk
         return $result['suggestioncategories'];
     }
 
-    public function getChatAgentsAvailabilityReport($params = array())
+    public function getCallsAgentAvailabilityReport($params = array())
+    {
+        $result = $this->call('GET', 'reports/calls/agentsavailability', $params);
+        return $result['agentsavailability'];
+    }
+
+    public function getTicketsAgentAvailabilityReport($params = array())
+    {
+        $result = $this->call('GET', 'reports/tickets/agentsavailability', $params);
+        return $result['agentsavailability'];
+    }
+
+    public function getChatAgentAvailabilityReport($params = array())
     {
         $result = $this->call('GET', 'reports/chats/agentsavailability', $params);
         return $result['agentsavailability'];
+    }
+
+    public function getCallsAvailabilityReport($params = array())
+    {
+        $result = $this->call('GET', 'reports/chats/availability', $params);
+        return $result['availability'];
     }
 
     public function getChatsAvailabilityReport($params = array())
@@ -155,16 +179,62 @@ class Ladesk
         return $result['availability'];
     }
 
+    public function getCallsLoadReport($params = array())
+    {
+        $result = $this->call('GET', 'reports/calls/load', $params);
+        return $result['loads'];
+    }
+
+    public function getTicketsLoadReport($params = array())
+    {
+        $result = $this->call('GET', 'reports/tickets/load', $params);
+        return $result['loads'];
+    }
+
     public function getChatsLoadReport($params = array())
     {
         $result = $this->call('GET', 'reports/chats/load', $params);
         return $result['loads'];
     }
 
+    public function getCallsSLAComplianceReport($params = array())
+    {
+        $result = $this->call('GET', 'reports/calls/slacompliance', $params);
+        return $result['slacompliances'];
+    }
+
+    public function getTicketsSLAComplianceReport($params = array())
+    {
+        $result = $this->call('GET', 'reports/tickets/slacompliance', $params);
+        return $result['slacompliances'];
+    }
+
     public function getChatsSLAComplianceReport($params = array())
     {
         $result = $this->call('GET', 'reports/chats/slacompliance', $params);
         return $result['slacompliances'];
+    }
+
+    public function getCallsSLALogReport($date_from, $date_to, $otherparams = array())
+    {
+        $params = array(
+            'date_from' => $date_from,
+            'date_to' => $date_to
+        );
+        $params = array_merge($params, $otherparams);
+        $result = $this->call('GET', 'reports/calls/slalog', $params);
+        return $result['slalogs'];
+    }
+
+    public function getTicketsSLALogReport($date_from, $date_to, $otherparams = array())
+    {
+        $params = array(
+            'date_from' => $date_from,
+            'date_to' => $date_to
+        );
+        $params = array_merge($params, $otherparams);
+        $result = $this->call('GET', 'reports/tickets/slalog', $params);
+        return $result['slalogs'];
     }
 
     public function getChatsSLALogReport($date_from, $date_to, $otherparams = array())
@@ -176,6 +246,61 @@ class Ladesk
         $params = array_merge($params, $otherparams);
         $result = $this->call('GET', 'reports/chats/slalog', $params);
         return $result['slalogs'];
+    }
+
+    public function getRankingAgentsReport($date_from, $date_to, $otherparams = array())
+    {
+        $params = array(
+            'date_from' => $date_from,
+            'date_to' => $date_to
+        );
+        $params = array_merge($params, $otherparams);
+        $result = $this->call('GET', 'reports/ranking', $params);
+        return $result['ranks'];
+    }
+
+    public function getTagsReport($date_from, $date_to, $otherparams = array())
+    {
+        $params = array(
+            'date_from' => $date_from,
+            'date_to' => $date_to
+        );
+        $params = array_merge($params, $otherparams);
+        $result = $this->call('GET', 'reports/tags', $params);
+        return $result['tags'];
+    }
+
+    public function getDepartmentsReport($date_from, $date_to, $otherparams = array())
+    {
+        $params = array(
+            'date_from' => $date_from,
+            'date_to' => $date_to
+        );
+        $params = array_merge($params, $otherparams);
+        $result = $this->call('GET', 'reports/departments', $params);
+        return $result['departments'];
+    }
+
+    public function getChannelsReport($date_from, $date_to, $otherparams = array())
+    {
+        $params = array(
+            'date_from' => $date_from,
+            'date_to' => $date_to
+        );
+        $params = array_merge($params, $otherparams);
+        $result = $this->call('GET', 'reports/channels', $params);
+        return $result['channels'];
+    }
+
+    public function getAgentsReport($date_from, $date_to, $otherparams = array())
+    {
+        $params = array(
+            'date_from' => $date_from,
+            'date_to' => $date_to
+        );
+        $params = array_merge($params, $otherparams);
+        $result = $this->call('GET', 'reports/agents', $params);
+        return $result['agents'];
     }
 
     public function createConversation($data = array())

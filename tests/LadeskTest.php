@@ -103,6 +103,30 @@ class CartTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('authtoken', $agent);
     }
 
+    public function testDepartmentOnlineStatus()
+    {
+        $ladesk = $this->getApi();
+        $onlineDepartmens = $ladesk->getDepartmentOnlineStatus();
+        $this->assertArrayHasKey('id', $onlineDepartmens[0]);
+        $this->assertArrayHasKey('name', $onlineDepartmens[0]);
+        $this->assertArrayHasKey('onlineStatus', $onlineDepartmens[0]);
+        $this->assertArrayHasKey('presetStatus', $onlineDepartmens[0]);
+        $this->assertArrayHasKey('chat_count', $onlineDepartmens[0]);
+        $this->assertArrayHasKey('new_count', $onlineDepartmens[0]);
+        $this->assertArrayHasKey('customer_reply_count', $onlineDepartmens[0]);
+        $this->assertArrayHasKey('total_count', $onlineDepartmens[0]);
+        $this->assertArrayHasKey('max_count', $onlineDepartmens[0]);
+
+        $id = $onlineDepartmens[0]['id'];
+        $department = $ladesk->getDepartment($id);
+        $this->assertArrayHasKey('departmentid', $department);
+        $this->assertArrayHasKey('name', $department);
+        $this->assertArrayHasKey('description', $department);
+        $this->assertArrayHasKey('onlinestatus', $department);
+        $this->assertArrayHasKey('presetstatus', $department);
+        $this->assertArrayHasKey('deleted', $department);
+    }
+
     public function testDepartments()
     {
         $ladesk = $this->getApi();
@@ -248,7 +272,7 @@ class CartTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('path', $result[0]);*/
     }
 
-    public function testChatReports()
+    public function testReports()
     {
         $ladesk = $this->getApi();
 
@@ -261,7 +285,7 @@ class CartTest extends PHPUnit_Framework_TestCase
             'departmentid' => '',
             'agentid' => ''
         );
-        $result = $ladesk->getChatAgentsAvailabilityReport();
+        $result = $ladesk->getChatAgentAvailabilityReport();
         $this->assertArrayHasKey('id', $result[0]);
         $this->assertArrayHasKey('userid', $result[0]);
         $this->assertArrayHasKey('firstname', $result[0]);
@@ -282,6 +306,11 @@ class CartTest extends PHPUnit_Framework_TestCase
             'agentid' => ''
         );
         $result = $ladesk->getChatsAvailabilityReport();
+        $this->assertArrayHasKey('date', $result[0]);
+        $this->assertArrayHasKey('mins', $result[0]);
+        $this->assertArrayHasKey('pct', $result[0]);
+
+        $result = $ladesk->getCallsAvailabilityReport();
         $this->assertArrayHasKey('date', $result[0]);
         $this->assertArrayHasKey('mins', $result[0]);
         $this->assertArrayHasKey('pct', $result[0]);
@@ -332,6 +361,186 @@ class CartTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('req_firstname', $result);
         $this->assertArrayHasKey('req_lastname', $result);
          */
+
+        $params = array(
+            'columns' => '',
+            'limicount' => '',
+            'limitfrom' => ''
+        );
+        $result = $ladesk->getTagsReport('2016-01-01', '2015-01-15');
+        $this->assertArrayHasKey('id', $result[0]);
+        $this->assertArrayHasKey('tagName', $result[0]);
+        $this->assertArrayHasKey('answers', $result[0]);
+        $this->assertArrayHasKey('chat_answers', $result[0]);
+        $this->assertArrayHasKey('chats', $result[0]);
+        $this->assertArrayHasKey('calls', $result[0]);
+        $this->assertArrayHasKey('rewards', $result[0]);
+        $this->assertArrayHasKey('punishments', $result[0]);
+
+        $result = $ladesk->getDepartmentsReport('2016-01-01', '2015-01-15');
+        $this->assertArrayHasKey('id', $result[0]);
+        $this->assertArrayHasKey('departmentName', $result[0]);
+        $this->assertArrayHasKey('answers', $result[0]);
+        $this->assertArrayHasKey('chat_answers', $result[0]);
+        $this->assertArrayHasKey('chats', $result[0]);
+        $this->assertArrayHasKey('calls', $result[0]);
+        $this->assertArrayHasKey('rewards', $result[0]);
+        $this->assertArrayHasKey('punishments', $result[0]);
+
+        $result = $ladesk->getChannelsReport('2016-01-01', '2015-01-15');
+        $this->assertArrayHasKey('id', $result[0]);
+        $this->assertArrayHasKey('channelName', $result[0]);
+        $this->assertArrayHasKey('answers', $result[0]);
+        $this->assertArrayHasKey('chat_answers', $result[0]);
+        $this->assertArrayHasKey('chats', $result[0]);
+        $this->assertArrayHasKey('calls', $result[0]);
+        $this->assertArrayHasKey('rewards', $result[0]);
+        $this->assertArrayHasKey('punishments', $result[0]);
+
+        $result = $ladesk->getAgentsReport('2016-01-01', '2015-01-15');
+        $this->assertArrayHasKey('id', $result[0]);
+        $this->assertArrayHasKey('contactid', $result[0]);
+        $this->assertArrayHasKey('firstname', $result[0]);
+        $this->assertArrayHasKey('lastname', $result[0]);
+        $this->assertArrayHasKey('answers', $result[0]);
+        $this->assertArrayHasKey('chat_answers', $result[0]);
+        $this->assertArrayHasKey('chats', $result[0]);
+        $this->assertArrayHasKey('calls', $result[0]);
+        $this->assertArrayHasKey('rewards', $result[0]);
+        $this->assertArrayHasKey('punishments', $result[0]);
+
+        $params = array(
+            'date_from' => '',
+            'date_to' => '',
+            'columns' => '',
+            'limicount' => '',
+            'limitfrom' => '',
+            'departmentid' => '',
+            'agentid' => ''
+        );
+        $result = $ladesk->getTicketsAgentAvailabilityReport();
+        $this->assertArrayHasKey('id', $result[0]);
+        $this->assertArrayHasKey('userid', $result[0]);
+        $this->assertArrayHasKey('firstname', $result[0]);
+        $this->assertArrayHasKey('lastname', $result[0]);
+        $this->assertArrayHasKey('contactid', $result[0]);
+        $this->assertArrayHasKey('departmentid', $result[0]);
+        $this->assertArrayHasKey('department_name', $result[0]);
+        $this->assertArrayHasKey('hours_online', $result[0]);
+        $this->assertArrayHasKey('from_date', $result[0]);
+        $this->assertArrayHasKey('to_date', $result[0]);
+
+        $result = $ladesk->getCallsAgentAvailabilityReport();
+        $this->assertArrayHasKey('id', $result[0]);
+        $this->assertArrayHasKey('userid', $result[0]);
+        $this->assertArrayHasKey('firstname', $result[0]);
+        $this->assertArrayHasKey('lastname', $result[0]);
+        $this->assertArrayHasKey('contactid', $result[0]);
+        $this->assertArrayHasKey('departmentid', $result[0]);
+        $this->assertArrayHasKey('department_name', $result[0]);
+        $this->assertArrayHasKey('hours_online', $result[0]);
+        $this->assertArrayHasKey('from_date', $result[0]);
+        $this->assertArrayHasKey('to_date', $result[0]);
+
+        $result = $ladesk->getTicketsLoadReport();
+        $this->assertArrayHasKey('date', $result[0]);
+        $this->assertArrayHasKey('avgQueue', $result[0]);
+        $this->assertArrayHasKey('maxQueue', $result[0]);
+        $this->assertArrayHasKey('minQueue', $result[0]);
+        $this->assertArrayHasKey('avgSlots', $result[0]);
+        $this->assertArrayHasKey('maxSlots', $result[0]);
+        $this->assertArrayHasKey('minSlots', $result[0]);
+        $this->assertArrayHasKey('avgService', $result[0]);
+        $this->assertArrayHasKey('maxService', $result[0]);
+        $this->assertArrayHasKey('minService', $result[0]);
+
+        $result = $ladesk->getCallsLoadReport();
+        $this->assertArrayHasKey('date', $result[0]);
+        $this->assertArrayHasKey('avgQueue', $result[0]);
+        $this->assertArrayHasKey('maxQueue', $result[0]);
+        $this->assertArrayHasKey('minQueue', $result[0]);
+        $this->assertArrayHasKey('avgSlots', $result[0]);
+        $this->assertArrayHasKey('maxSlots', $result[0]);
+        $this->assertArrayHasKey('minSlots', $result[0]);
+        $this->assertArrayHasKey('avgService', $result[0]);
+        $this->assertArrayHasKey('maxService', $result[0]);
+        $this->assertArrayHasKey('minService', $result[0]);
+
+        $result = $ladesk->getTicketsSLAComplianceReport();
+        $this->assertArrayHasKey('date', $result[0]);
+        $this->assertArrayHasKey('fulfilled', $result[0]);
+        $this->assertArrayHasKey('avgFulfilledTime', $result[0]);
+        $this->assertArrayHasKey('maxFulfilledTime', $result[0]);
+        $this->assertArrayHasKey('minFulfilledTime', $result[0]);
+        $this->assertArrayHasKey('unfulfilled', $result[0]);
+        $this->assertArrayHasKey('avgUnfulfilledTime', $result[0]);
+        $this->assertArrayHasKey('maxUnfulfilledTime', $result[0]);
+        $this->assertArrayHasKey('minUnfulfilledTime', $result[0]);
+
+        $result = $ladesk->getCallsSLAComplianceReport();
+        $this->assertArrayHasKey('date', $result[0]);
+        $this->assertArrayHasKey('fulfilled', $result[0]);
+        $this->assertArrayHasKey('avgFulfilledTime', $result[0]);
+        $this->assertArrayHasKey('maxFulfilledTime', $result[0]);
+        $this->assertArrayHasKey('minFulfilledTime', $result[0]);
+        $this->assertArrayHasKey('unfulfilled', $result[0]);
+        $this->assertArrayHasKey('avgUnfulfilledTime', $result[0]);
+        $this->assertArrayHasKey('maxUnfulfilledTime', $result[0]);
+        $this->assertArrayHasKey('minUnfulfilledTime', $result[0]);
+
+        $result = $ladesk->getTicketsSLALogReport('2016-01-01', '2015-01-15');
+        $this->assertArrayHasKey('id', $result[0]);
+        $this->assertArrayHasKey('conversationid', $result[0]);
+        $this->assertArrayHasKey('departmentid', $result[0]);
+        $this->assertArrayHasKey('levelid', $result[0]);
+        $this->assertArrayHasKey('sla', $result[0]);
+        $this->assertArrayHasKey('date_created', $result[0]);
+        $this->assertArrayHasKey('date_closed', $result[0]);
+        $this->assertArrayHasKey('server_date_closed', $result[0]);
+        $this->assertArrayHasKey('date_due', $result[0]);
+        $this->assertArrayHasKey('server_date_due', $result[0]);
+        $this->assertArrayHasKey('sla_level_id', $result[0]);
+        $this->assertArrayHasKey('agentid', $result[0]);
+        $this->assertArrayHasKey('req_contactid', $result[0]);
+
+        $result = $ladesk->getCallsSLALogReport('2016-01-01', '2015-01-15');
+        /* empty for now
+        $this->assertArrayHasKey('id', $result[0]);
+        $this->assertArrayHasKey('conversationid', $result[0]);
+        $this->assertArrayHasKey('departmentid', $result[0]);
+        $this->assertArrayHasKey('levelid', $result[0]);
+        $this->assertArrayHasKey('sla', $result[0]);
+        $this->assertArrayHasKey('date_created', $result[0]);
+        $this->assertArrayHasKey('date_closed', $result[0]);
+        $this->assertArrayHasKey('server_date_closed', $result[0]);
+        $this->assertArrayHasKey('date_due', $result[0]);
+        $this->assertArrayHasKey('server_date_due', $result[0]);
+        $this->assertArrayHasKey('sla_level_id', $result[0]);
+        $this->assertArrayHasKey('agentid', $result[0]);
+        $this->assertArrayHasKey('req_contactid', $result[0]);*/
+
+        $params = array(
+            'columns' => '',
+            'limicount' => '',
+            'limitfrom' => '',
+            'agentid' => '',
+            'contactid' => '',
+            'types' => ''
+        );
+        $result = $ladesk->getRankingAgentsReport('2016-01-01', '2015-01-15');
+        /* empty for now
+        $this->assertArrayHasKey('id', $result[0]);
+        $this->assertArrayHasKey('rankingType', $result[0]);
+        $this->assertArrayHasKey('datecreated', $result[0]);
+        $this->assertArrayHasKey('conversationid', $result[0]);
+        $this->assertArrayHasKey('agentcontactid', $result[0]);
+        $this->assertArrayHasKey('agentEmail', $result[0]);
+        $this->assertArrayHasKey('agent', $result[0]);
+        $this->assertArrayHasKey('contactid', $result[0]);
+        $this->assertArrayHasKey('requesterEmail', $result[0]);
+        $this->assertArrayHasKey('server_date_due', $result[0]);
+        $this->assertArrayHasKey('requester', $result[0]);
+        $this->assertArrayHasKey('comment', $result[0]);*/
     }
 
 }
