@@ -143,6 +143,24 @@ class Ladesk
         return $result['suggestioncategories'];
     }
 
+    public function getChatAgentsAvailabilityReport($params = array())
+    {
+        $result = $this->call('GET', 'reports/chats/agentsavailability', $params);
+        return $result['agentsavailability'];
+    }
+
+    public function getChatsAvailabilityReport($params = array())
+    {
+        $result = $this->call('GET', 'reports/chats/availability', $params);
+        return $result['availability'];
+    }
+
+    public function getChatsLoadReport($params = array())
+    {
+        $result = $this->call('GET', 'reports/chats/load', $params);
+        return $result['loads'];
+    }
+
     public function createConversation($data = array())
     {
         $result = $this->call('POST', 'conversations', $data);

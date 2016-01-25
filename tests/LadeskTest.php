@@ -248,4 +248,60 @@ class CartTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('path', $result[0]);*/
     }
 
+    public function testChatAgentsAvailabilityReport()
+    {
+        $ladesk = $this->getApi();
+
+        $params = array(
+            'date_from' => '',
+            'date_to' => '',
+            'columns' => '',
+            'limicount' => '',
+            'limitfrom' => '',
+            'departmentid' => '',
+            'agentid' => ''
+        );
+        $result = $ladesk->getChatAgentsAvailabilityReport();
+        $this->assertArrayHasKey('id', $result[0]);
+        $this->assertArrayHasKey('userid', $result[0]);
+        $this->assertArrayHasKey('firstname', $result[0]);
+        $this->assertArrayHasKey('lastname', $result[0]);
+        $this->assertArrayHasKey('contactid', $result[0]);
+        $this->assertArrayHasKey('departmentid', $result[0]);
+        $this->assertArrayHasKey('department_name', $result[0]);
+        $this->assertArrayHasKey('hours_online', $result[0]);
+        $this->assertArrayHasKey('from_date', $result[0]);
+        $this->assertArrayHasKey('to_date', $result[0]);
+    }
+
+    public function testChatsAvailabilityAndLoadReport()
+    {
+        $ladesk = $this->getApi();
+
+        $params = array(
+            'date_from' => '',
+            'date_to' => '',
+            'limicount' => '',
+            'limitfrom' => '',
+            'departmentid' => '',
+            'agentid' => ''
+        );
+        $result = $ladesk->getChatsAvailabilityReport();
+        $this->assertArrayHasKey('date', $result[0]);
+        $this->assertArrayHasKey('mins', $result[0]);
+        $this->assertArrayHasKey('pct', $result[0]);
+
+        $result = $ladesk->getChatsLoadReport();
+        $this->assertArrayHasKey('date', $result[0]);
+        $this->assertArrayHasKey('avgQueue', $result[0]);
+        $this->assertArrayHasKey('maxQueue', $result[0]);
+        $this->assertArrayHasKey('minQueue', $result[0]);
+        $this->assertArrayHasKey('avgSlots', $result[0]);
+        $this->assertArrayHasKey('maxSlots', $result[0]);
+        $this->assertArrayHasKey('minSlots', $result[0]);
+        $this->assertArrayHasKey('avgService', $result[0]);
+        $this->assertArrayHasKey('maxService', $result[0]);
+        $this->assertArrayHasKey('minService', $result[0]);
+    }
+
 }
