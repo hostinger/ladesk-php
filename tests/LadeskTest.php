@@ -138,7 +138,7 @@ class CartTest extends PHPUnit_Framework_TestCase
         $result = $ladesk->getConversationTags($id);
         $this->assertArrayHasKey('tags', $result);
 
-//        $result = $ladesk->unassignTagForConversation($id, 'paid');
+//        $result = $ladesk->unassignTagFromConversation($id, 'paid');
 
         $data = array(
             'useridentifier' => '',
@@ -175,10 +175,9 @@ class CartTest extends PHPUnit_Framework_TestCase
         $param = array(
             'email' => 'hisemail@mail.domain'
         );
-        $result = $ladesk->getCustomers($param);
-        $this->assertArrayHasKey('customers', $result);
+        $result = $ladesk->getCustomers(); //var_dump($result);
 
-        $id = $result[0]['contactid'];
+        $id = $result[14]['contactid'];
 
         $result = $ladesk->getCustomer($id);
         $this->assertArrayHasKey('contactid', $result);
@@ -194,17 +193,23 @@ class CartTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('customfields', $result);
         $this->assertArrayHasKey('uniquefields', $result);
 
+        //$result = $ladesk->addCustomerToGroup($id, 'non-VIP2'); var_dump($result);
+
+        $result = $ladesk->getCustomerGroups($id);
+        $this->assertArrayHasKey('groupid', $result[0]);
+        $this->assertArrayHasKey('groupname', $result[0]);
+
         $data = array(
-            'email' => 'hisemail@mail.domain',
-            'phone' => '',
-            'name' => 'Fname Lname',
+            'email' => 'hisemail2@mail.domain',
+            'phone' => '453',
+            'name' => 'Fname2 Lname2',
             'role' => 'R',
             'password' => 'hispassword',
-            'note'   =>  'lovely customer',
+            'note'   =>  'lovely customer2',
             'send_registration_mail' => 'N'
         );
 
-//        $result = $ladesk->registerCustomer($data);
+//        $result = $ladesk->registerCustomer($data); var_dump($result);
 
 
     }
@@ -231,6 +236,16 @@ class CartTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('bg_color', $result);
 
 //        $result = $ladesk->changeCustomersGroup('503d', $params);
+    }
+
+    public function testSuggestionCategories()
+    {
+        $ladesk = $this->getApi();
+        $result = $ladesk->getSuggestionCategories();
+        /* no suggestion categories just yet
+        $this->assertArrayHasKey('id', $result[0]);
+        $this->assertArrayHasKey('title', $result[0]);
+        $this->assertArrayHasKey('path', $result[0]);*/
     }
 
 }
