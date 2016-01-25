@@ -51,9 +51,9 @@ class Ladesk
         return $result['tags'];
     }
 
-    public function getConversations()
+    public function getConversations($params = array())
     {
-        $result = $this->call('GET', 'conversations');
+        $result = $this->call('GET', 'conversations', $params);
         return $result['conversations'];
     }
 
