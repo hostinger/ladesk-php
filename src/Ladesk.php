@@ -394,13 +394,15 @@ class Ladesk
         return $result;
     }
 
-    public function addMessageToConversation($conversationId, $message, $user_identifier)
+    public function addMessageToConversation($conversationId, $message, $user_identifier, $otherparams = array())
     {
         $params = array(
             'useridentifier' => $user_identifier,
             'message' => $message,
             'type' => 'M',
         );
+
+        $params = array_merge($params, $otherparams);
 
         return $this->call('POST', 'conversations/'.$conversationId.'/messages', $params);
     }
