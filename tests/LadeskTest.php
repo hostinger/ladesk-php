@@ -150,7 +150,9 @@ class CartTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('conversationid', $result[0]);
 
         $id = $result[0]['conversationid'];
-        $result = $ladesk->getConversation('fc438298'); var_dump($result);
+        $result = $ladesk->getConversation('fc438298');
+//        $result = $ladesk->setConversationOpen('fc438298'); var_dump($result);
+
         $this->assertArrayHasKey('departmentid', $result);
         $this->assertArrayHasKey('code', $result);
 
@@ -180,7 +182,7 @@ class CartTest extends PHPUnit_Framework_TestCase
             'tag'   =>  'test',
         );
 //        $result = $ladesk->createConversation($data);
-//        $ladesk->addMessageToConversation($id, 'This is reply from API', 'andrius@hostinger.com');
+//        $ladesk->addMessageToConversation('fc438298', 'This is reply from API', 'andrius@hostinger.com');
 //        $ladesk->addNoteToConversation($id, 'This is auto note');
 //        $ladesk->assignTagForConversation($id, 'test');
 
@@ -196,7 +198,7 @@ class CartTest extends PHPUnit_Framework_TestCase
             'useridentifier' => '',
             'note' => 'this is a deletion note'
         );
-//        $result = $ladesk->deleteConversation($id, $data);
+//        $result = $ladesk->deleteConversation('fc438298', $data); var_dump($result);
 
     }
 
