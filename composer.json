@@ -3,7 +3,9 @@
   "description": "PHP Client for Ladesk REST API",
   "license": "MIT",
   "require": {
-    "php": ">5.2"
+    "php": ">5.2",
+    "ext-curl": "*",
+    "ext-json": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "~4.0",
@@ -15,9 +17,7 @@
     "fabpot/php-cs-fixer": "1.11"
   },
   "autoload": {
-    "psr-4": {
-      "Ladesk\\": "src"
-    }
+    "psr-0": { "Ladesk": "src/" }
   },
   "scripts": {
     "test": "phpunit",
