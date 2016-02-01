@@ -1,10 +1,7 @@
 <?php
 
-namespace Ladesk;
-
 class Ladesk
 {
-
     public function __construct($url, $key)
     {
         $this->api_key = $key;
@@ -37,7 +34,7 @@ class Ladesk
 
     public function getCompany($id)
     {
-        $result = $this->call('GET', 'companies/'.$id);
+        $result = $this->call('GET', 'companies/' . $id);
         return $result;
     }
 
@@ -344,7 +341,7 @@ class Ladesk
     {
         $result = $this->call('POST', 'conversations', $data);
         $id = $result['conversationid'];
-        if(isset($data['tag'])) {
+        if (isset($data['tag'])) {
             $this->assignTagForConversation($id, $data['tag']);
         }
         return $result;
@@ -355,7 +352,7 @@ class Ladesk
         $params = array(
             'status' => 'R',
         );
-        return $this->call('PUT', 'conversations/'.$conversationId.'/status', $params);
+        return $this->call('PUT', 'conversations/' . $conversationId . '/status', $params);
     }
 
     public function setConversationOpen($conversationId)
@@ -363,7 +360,7 @@ class Ladesk
         $params = array(
             'status' => 'C',
         );
-        return $this->call('PUT', 'conversations/'.$conversationId.'/status', $params);
+        return $this->call('PUT', 'conversations/' . $conversationId . '/status', $params);
     }
 
     public function setConversationAnswered($conversationId)
@@ -371,7 +368,7 @@ class Ladesk
         $params = array(
             'status' => 'A',
         );
-        return $this->call('PUT', 'conversations/'.$conversationId.'/status', $params);
+        return $this->call('PUT', 'conversations/' . $conversationId . '/status', $params);
     }
 
     public function transferConversation($id, $data = array())
@@ -411,7 +408,7 @@ class Ladesk
 
         $params = array_merge($params, $otherparams);
 
-        return $this->call('POST', 'conversations/'.$conversationId.'/messages', $params);
+        return $this->call('POST', 'conversations/' . $conversationId . '/messages', $params);
     }
 
     public function addNoteToConversation($conversationId, $message)
@@ -420,17 +417,17 @@ class Ladesk
             'message' => $message,
             'type' => 'N',
         );
-        return $this->call('POST', 'conversations/'.$conversationId.'/messages', $params);
+        return $this->call('POST', 'conversations/' . $conversationId . '/messages', $params);
     }
 
     public function addCustomFieldToConversation($conversationId, $params)
     {
-        return $this->call('POST', 'conversations/'.$conversationId.'/fields', $params);
+        return $this->call('POST', 'conversations/' . $conversationId . '/fields', $params);
     }
 
     public function addCustomFieldToCustomer($conversationId, $params)
     {
-        return $this->call('POST', 'customers/'.$conversationId.'/fields', $params);
+        return $this->call('POST', 'customers/' . $conversationId . '/fields', $params);
     }
 
     public function addCustomerToGroup($id, $groupName)
@@ -438,7 +435,7 @@ class Ladesk
         $params = array(
             'name' => $groupName,
         );
-        return $this->call('POST', 'customers/'.$id.'/groups', $params);
+        return $this->call('POST', 'customers/' . $id . '/groups', $params);
     }
 
     public function addCustomersGroup($params)
@@ -466,7 +463,7 @@ class Ladesk
         $params = array(
             'name' => $tag,
         );
-        $result = $this->call('POST', 'conversations/'.$conversationId.'/tags', $params);
+        $result = $this->call('POST', 'conversations/' . $conversationId . '/tags', $params);
         return $result;
     }
 
@@ -475,7 +472,7 @@ class Ladesk
         $params = array(
             'name' => $name,
         );
-        $result = $this->call('DELETE', 'conversations/'.$conversationId.'/tags', $params);
+        $result = $this->call('DELETE', 'conversations/' . $conversationId . '/tags', $params);
         return $result;
     }
 
@@ -579,7 +576,7 @@ class Ladesk
             'apikey' => $this->api_key,
         );
 
-        $url = $this->url.'?'.http_build_query($defaults, '', '&');
+        $url = $this->url . '?' . http_build_query($defaults, '', '&');
 
         $ch = curl_init();
 

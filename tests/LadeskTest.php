@@ -1,8 +1,6 @@
 <?php
 
-use Ladesk\Ladesk;
-
-class CartTest extends PHPUnit_Framework_TestCase
+class LadeskTest extends PHPUnit_Framework_TestCase
 {
     private function getApi()
     {
