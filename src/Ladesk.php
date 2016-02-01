@@ -9,6 +9,7 @@ class Ladesk
     {
         $this->api_key = $key;
         $this->url = $url . '/api/index.php';
+        $this->public_url = $url . '/index.php?type=my_tickets&cid=';
     }
 
     public function getApplicationStatus()
@@ -80,6 +81,17 @@ class Ladesk
     {
         $result = $this->call('GET', 'departments/' . $id);
         return $result;
+    }
+
+    public function getDepartmentIdByName($name)
+    {
+        $departments = $this->getDepartments();
+        foreach ($departments as $k => $v) {
+            if (strtolower($v['name']) == strtolower($name)) {
+                return $departments[$k]['departmentid'];
+            }
+        }
+        throw new \Exception('Department was not found');
     }
 
     public function getAgent($id)
@@ -549,7 +561,17 @@ class Ladesk
         $result = $this->call('GET', 'knowledgebase/search', $param);
         return $result['entries'];
     }
-    
+
+    public function getUrlForCode($code)
+    {
+        return $this->public_url . $code;
+    }
+
+    public function getUrlForConversation($conversation)
+    {
+        return $this->public_url . $conversation['publicurlcode'];
+    }
+
     private function call($method, $url, array $params = array())
     {
         $defaults = array(
@@ -559,49 +581,49 @@ class Ladesk
 
         $url = $this->url.'?'.http_build_query($defaults, '', '&');
 
-        $this->request = curl_init();
+        $ch = curl_init();
 
         switch (strtoupper($method)) {
             case 'HEAD':
-                curl_setopt($this->request, CURLOPT_NOBODY, true);
+                curl_setopt($ch, CURLOPT_NOBODY, true);
                 break;
             case 'GET':
                 if (!empty($vars)) {
                     $url .= (is_string($vars)) ? $vars : http_build_query($vars, '', '&');
                 }
-                curl_setopt($this->request, CURLOPT_HTTPGET, true);
+                curl_setopt($ch, CURLOPT_HTTPGET, true);
                 break;
             case 'DELETE':
                 $vars = http_build_query($params, '', '&');
-                curl_setopt($this->request, CURLOPT_CUSTOMREQUEST, "DELETE");
-                if (!empty($vars)) curl_setopt($this->request, CURLOPT_POSTFIELDS, $vars);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+                if (!empty($vars)) curl_setopt($ch, CURLOPT_POSTFIELDS, $vars);
                 break;
             case 'PUT':
                 $vars = http_build_query($params, '', '&');
-                curl_setopt($this->request, CURLOPT_CUSTOMREQUEST, "PUT");
-                if (!empty($vars)) curl_setopt($this->request, CURLOPT_POSTFIELDS, $vars);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+                if (!empty($vars)) curl_setopt($ch, CURLOPT_POSTFIELDS, $vars);
                 break;
             case 'POST':
                 $vars = http_build_query($params, '', '&');
-                if (!empty($vars)) curl_setopt($this->request, CURLOPT_POSTFIELDS, $vars);
-                curl_setopt($this->request, CURLOPT_POST, true);
+                if (!empty($vars)) curl_setopt($ch, CURLOPT_POSTFIELDS, $vars);
+                curl_setopt($ch, CURLOPT_POST, true);
                 break;
             default:
-                curl_setopt($this->request, CURLOPT_CUSTOMREQUEST, $method);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
         }
 
-        curl_setopt($this->request, CURLOPT_URL, $url);
-        curl_setopt($this->request, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($this->request, CURLOPT_USERAGENT, 'Chrome 41.0.2228.0');
-        curl_setopt($this->request, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($this->request, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Chrome 41.0.2228.0');
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
 
-        $response = curl_exec($this->request);
+        $response = curl_exec($ch);
         if (!$response) {
-            throw new \Exception(curl_error($this->request), curl_errno($this->request));
+            throw new \Exception(curl_error($ch), curl_errno($ch));
         }
 
-        curl_close($this->request);
+        curl_close($ch);
 
         $json = $response;
         $decoded = json_decode($json, 1);
