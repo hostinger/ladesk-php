@@ -2,18 +2,13 @@
 
 namespace Ladesk;
 
-use GuzzleHttp\Client;
-
 class Ladesk
 {
 
     public function __construct($url, $key)
     {
         $this->api_key = $key;
-        $this->client = new Client(array(
-            'base_uri' => $url . '/api/index.php',
-            'timeout' => 5,
-        ));
+        $this->url = $url . '/api/index.php';
     }
 
     public function getApplicationStatus()
@@ -557,22 +552,60 @@ class Ladesk
     
     private function call($method, $url, array $params = array())
     {
-        $query = array_merge(array(
+        $defaults = array(
             'handler' => $url,
             'apikey' => $this->api_key,
-        ), $params);
-
-        $options = array(
-            'query' => $query,
         );
 
-        $response = $this->client->request($method, '', $options);
-        $code = $response->getStatusCode();
-        if ($code != 200) {
-            throw new \ErrorException('status occurred: ' . $code);
+        $url = $this->url.'?'.http_build_query($defaults, '', '&');
+
+        $this->request = curl_init();
+
+        switch (strtoupper($method)) {
+            case 'HEAD':
+                curl_setopt($this->request, CURLOPT_NOBODY, true);
+                break;
+            case 'GET':
+                if (!empty($vars)) {
+                    $url .= (is_string($vars)) ? $vars : http_build_query($vars, '', '&');
+                }
+                curl_setopt($this->request, CURLOPT_HTTPGET, true);
+                break;
+            case 'DELETE':
+                $vars = http_build_query($params, '', '&');
+                curl_setopt($this->request, CURLOPT_CUSTOMREQUEST, "DELETE");
+                if (!empty($vars)) curl_setopt($this->request, CURLOPT_POSTFIELDS, $vars);
+                break;
+            case 'PUT':
+                $vars = http_build_query($params, '', '&');
+                curl_setopt($this->request, CURLOPT_CUSTOMREQUEST, "PUT");
+                if (!empty($vars)) curl_setopt($this->request, CURLOPT_POSTFIELDS, $vars);
+                break;
+            case 'POST':
+                $vars = http_build_query($params, '', '&');
+                if (!empty($vars)) curl_setopt($this->request, CURLOPT_POSTFIELDS, $vars);
+                curl_setopt($this->request, CURLOPT_POST, true);
+                break;
+            default:
+                curl_setopt($this->request, CURLOPT_CUSTOMREQUEST, $method);
         }
-        $json = (string)$response->getBody();
+
+        curl_setopt($this->request, CURLOPT_URL, $url);
+        curl_setopt($this->request, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($this->request, CURLOPT_USERAGENT, 'Chrome 41.0.2228.0');
+        curl_setopt($this->request, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($this->request, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+
+        $response = curl_exec($this->request);
+        if (!$response) {
+            throw new \Exception(curl_error($this->request), curl_errno($this->request));
+        }
+
+        curl_close($this->request);
+
+        $json = $response;
         $decoded = json_decode($json, 1);
+
         if (isset($decoded['response']['status']) && $decoded['response']['status'] == 'ERROR') {
             throw new \ErrorException('error occurred: ' . $decoded['response']['errormessage']);
         }

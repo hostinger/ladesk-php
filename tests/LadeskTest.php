@@ -39,11 +39,11 @@ class CartTest extends PHPUnit_Framework_TestCase
         $ladesk = $this->getApi();
 
         $data = array(
-            'name' => 'brand new tag name',
+            'name' => 'IMPORTED',
             'color' => '',
             'bg_color' => ''
         );
-//        $result = $ladesk->addTag($data);
+//       $result = $ladesk->addTag($data);
 
         $result = $ladesk->getTags();
         $this->assertArrayHasKey('name', $result[0]);
@@ -56,7 +56,7 @@ class CartTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('color', $result);
         $this->assertArrayHasKey('bg_color', $result);
 
-        $result = $ladesk->deleteTag($id);
+//        $result = $ladesk->deleteTag($id);
 
     }
 
@@ -150,7 +150,9 @@ class CartTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('conversationid', $result[0]);
 
         $id = $result[0]['conversationid'];
-        $result = $ladesk->getConversation($id);
+        $result = $ladesk->getConversation('fc438298');
+//        $result = $ladesk->setConversationOpen('fc438298'); var_dump($result);
+
         $this->assertArrayHasKey('departmentid', $result);
         $this->assertArrayHasKey('code', $result);
 
@@ -163,9 +165,9 @@ class CartTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('tags', $result);
 
         $data = array(
-            'customfields' => json_encode(array('a', 'b', 'c', 'd'))
+            'customfields' => '[{"code":"varsymbol","value":"test"}]'
         );
-//        $result = $ladesk->addCustomFieldToConversation($id, $data);
+        //$result = $ladesk->addCustomFieldToConversation('fc438298', $data);
 
 //        $result = $ladesk->deleteCustomFieldFromConversation($id);
 
@@ -180,7 +182,7 @@ class CartTest extends PHPUnit_Framework_TestCase
             'tag'   =>  'test',
         );
 //        $result = $ladesk->createConversation($data);
-//        $ladesk->addMessageToConversation($id, 'This is reply from API', 'andrius@hostinger.com');
+//        $ladesk->addMessageToConversation('fc438298', 'This is reply from API', 'andrius@hostinger.com');
 //        $ladesk->addNoteToConversation($id, 'This is auto note');
 //        $ladesk->assignTagForConversation($id, 'test');
 
@@ -196,7 +198,7 @@ class CartTest extends PHPUnit_Framework_TestCase
             'useridentifier' => '',
             'note' => 'this is a deletion note'
         );
-//        $result = $ladesk->deleteConversation($id, $data);
+//        $result = $ladesk->deleteConversation('fc438298', $data); var_dump($result);
 
     }
 
@@ -208,7 +210,7 @@ class CartTest extends PHPUnit_Framework_TestCase
         );
         $result = $ladesk->getCustomers(); //var_dump($result);
 
-        $id = $result[14]['contactid'];
+        $id = $result[0]['contactid'];
 
         $data = array(
             'customfields' => json_encode(array('a', 'b', 'c', 'd'))
@@ -220,7 +222,7 @@ class CartTest extends PHPUnit_Framework_TestCase
         );
 //        $result = $ladesk->deleteCustomFieldFromCustomer($id, $data);
 
-        $result = $ladesk->getCustomer($id);
+        $result = $ladesk->getCustomer('feelfree@hotbox.ru');var_dump($result);
         $this->assertArrayHasKey('contactid', $result);
         $this->assertArrayHasKey('email', $result);
         $this->assertArrayHasKey('firstname', $result);
@@ -236,9 +238,9 @@ class CartTest extends PHPUnit_Framework_TestCase
 
         //$result = $ladesk->addCustomerToGroup($id, 'non-VIP2'); var_dump($result);
 
-        $result = $ladesk->getCustomerGroups($id);
-        $this->assertArrayHasKey('groupid', $result[0]);
-        $this->assertArrayHasKey('groupname', $result[0]);
+        //$result = $ladesk->getCustomerGroups($id);
+        //$this->assertArrayHasKey('groupid', $result[0]);
+        //$this->assertArrayHasKey('groupname', $result[0]);
 
         $data = array(
             'email' => 'hisemail2@mail.domain',
@@ -676,7 +678,6 @@ class CartTest extends PHPUnit_Framework_TestCase
 //        $result = $ladesk->changeKnowledgebaseCategory($id, $data);
 
 //        $result = $ladesk->deleteKnowledgebaseArticle($id);
-        var_dump($result);
 
     }
 
