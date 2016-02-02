@@ -341,8 +341,23 @@ class Ladesk
     {
         $result = $this->call('POST', 'conversations', $data);
         $id = $result['conversationid'];
+
         if (isset($data['tag'])) {
-            $this->assignTagForConversation($id, $data['tag']);
+            try {
+                $this->assignTagForConversation($id, $data['tag']);
+            } catch(Exception $e) {
+                // be silent
+            }
+        }
+
+        if (isset($data['tags']) && is_array($data['tags'])) {
+            foreach($data['tags'] as $tag) {
+                try {
+                    $this->assignTagForConversation($id, $tag);
+                } catch(Exception $e) {
+                    // be silent
+                }
+            }
         }
         return $result;
     }
