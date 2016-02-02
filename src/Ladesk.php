@@ -569,6 +569,22 @@ class Ladesk
         return $this->public_url . $conversation['publicurlcode'];
     }
 
+    public function getConversationStatuses()
+    {
+        return array(
+            'A' => 'Answered',
+            'P' => 'Calling',
+            'T' => 'Chatting',
+            'X' => 'Deleted',
+            'B' => 'Spam',
+            'I' => 'Init',
+            'C' => 'Open',
+            'R' => 'Resolved',
+            'N' => 'New',
+            'W' => 'Postponed',
+        );
+    }
+
     private function call($method, $url, array $params = array())
     {
         $defaults = array(
