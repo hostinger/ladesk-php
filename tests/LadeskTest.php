@@ -12,6 +12,13 @@ class LadeskTest extends PHPUnit_Framework_TestCase
         return new Ladesk($api_url, $api_key);
     }
 
+    public function testCreateCustomer()
+    {
+//        $ladesk = $this->getApi();
+//        $customer = $ladesk->getCustomerByEmail('paulius.putna@gmail.com');
+//        var_dump($customer);
+    }
+
     public function testOverview()
     {
         $ladesk = $this->getApi();

@@ -511,6 +511,22 @@ class Ladesk
         return $this->call('POST', 'customers/', $data);
     }
 
+    public function getCustomerByEmail($email)
+    {
+        try {
+            $customer = $this->getCustomer($email);
+            return $customer;
+        } catch (Exception $e) {
+            $data = array(
+                'email' => $email,
+                'role' => 'R',
+                'send_registration_mail' => 'N'
+            );
+            $customer = $this->registerCustomer($data);
+        }
+        return $customer;
+    }
+
     public function deleteCustomersGroup($id)
     {
         return $this->call('DELETE', 'customersgroups/' . $id);
