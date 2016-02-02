@@ -88,7 +88,7 @@ class Ladesk
                 return $departments[$k]['departmentid'];
             }
         }
-        throw new \Exception('Department was not found');
+        throw new Exception('Department was not found');
     }
 
     public function getAgent($id)
@@ -617,7 +617,7 @@ class Ladesk
 
         $response = curl_exec($ch);
         if (!$response) {
-            throw new \Exception(curl_error($ch), curl_errno($ch));
+            throw new Exception(curl_error($ch), curl_errno($ch));
         }
 
         curl_close($ch);
@@ -626,7 +626,7 @@ class Ladesk
         $decoded = json_decode($json, 1);
 
         if (isset($decoded['response']['status']) && $decoded['response']['status'] == 'ERROR') {
-            throw new \ErrorException('error occurred: ' . $decoded['response']['errormessage']);
+            throw new ErrorException('error occurred: ' . $decoded['response']['errormessage']);
         }
         return $decoded['response'];
     }
