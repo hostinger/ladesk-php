@@ -585,8 +585,8 @@ class Ladesk
                 curl_setopt($ch, CURLOPT_NOBODY, true);
                 break;
             case 'GET':
-                if (!empty($vars)) {
-                    $url .= (is_string($vars)) ? $vars : http_build_query($vars, '', '&');
+                if (!empty($params)) {
+                    $url .= '&' . http_build_query($params, '', '&');
                 }
                 curl_setopt($ch, CURLOPT_HTTPGET, true);
                 break;
