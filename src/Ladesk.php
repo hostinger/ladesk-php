@@ -661,7 +661,8 @@ class Ladesk
         curl_setopt($ch, CURLOPT_USERAGENT, 'Chrome 41.0.2228.0');
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        
         $response = curl_exec($ch);
         if (!$response) {
             throw new Exception(curl_error($ch), curl_errno($ch));
