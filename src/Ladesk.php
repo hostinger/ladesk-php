@@ -611,7 +611,7 @@ class Ladesk
             'I' => 'Init',
             'C' => 'Open',
             'R' => 'Resolved',
-            'N' => 'New',
+            'N' => 'Waiting for answer',
             'W' => 'Postponed',
         );
     }
