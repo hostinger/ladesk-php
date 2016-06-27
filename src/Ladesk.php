@@ -581,11 +581,16 @@ class Ladesk
         return $result;
     }
 
-    public function searchKnowledgebase($term)
+    public function searchKnowledgebase($term, $kbId = null)
     {
         $param = array(
             'query' => $term
         );
+
+        if(!is_null($kbId)){
+            $param['kb_id'] = $kbId;
+        }
+        
         $result = $this->call('GET', 'knowledgebase/search', $param);
         return $result['entries'];
     }
