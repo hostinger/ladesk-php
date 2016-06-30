@@ -313,9 +313,9 @@ class Ladesk
         return $result['knowledgebases'];
     }
 
-    public function getKnowledgebaseArticles()
+    public function getKnowledgebaseArticles($params = array())
     {
-        $result = $this->call('GET', 'knowledgebase/entries');
+        $result = $this->call('GET', 'knowledgebase/entries', $params);
         return $result['entries'];
     }
 
